@@ -1,11 +1,23 @@
 package com.itsxtt.myplaygrounds
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.itsxtt.myplaygrounds.adapter.NavigationAdapter
+import com.itsxtt.myplaygrounds.base.BaseActivity
+import com.itsxtt.myplaygrounds.bean.NavigationItem
+import com.itsxtt.myplaygrounds.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.navigationRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.navigationRecyclerView.adapter = NavigationAdapter(listOf(NavigationItem("ViewBinding", "")))
     }
 }
