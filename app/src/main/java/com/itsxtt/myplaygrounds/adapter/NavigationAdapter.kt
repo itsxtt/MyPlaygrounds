@@ -1,14 +1,14 @@
 package com.itsxtt.myplaygrounds.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.itsxtt.myplaygrounds.bean.NavigationItem
 import com.itsxtt.myplaygrounds.databinding.ItemNavigationBinding
-import com.itsxtt.myplaygrounds.viewbinding.ViewBindingActivity
 
 class NavigationAdapter(val navigationItems: List<NavigationItem>) : RecyclerView.Adapter<NavigationAdapter.ViewHolder>() {
+
+    var onClickListener: OnItemClickListener? = null
 
     inner class ViewHolder(binding: ItemNavigationBinding) : RecyclerView.ViewHolder(binding.root) {
         val nameBtn = binding.nameBtn
@@ -24,9 +24,13 @@ class NavigationAdapter(val navigationItems: List<NavigationItem>) : RecyclerVie
         holder.nameBtn.text = navigationItem.name
 
         holder.nameBtn.setOnClickListener {
-            holder.itemView.context.startActivity(Intent(holder.itemView.context, ViewBindingActivity::class.java))
+            onClickListener?.onClick(position, navigationItem)
         }
     }
 
     override fun getItemCount() = navigationItems.size
+
+    interface OnItemClickListener {
+        fun onClick(position: Int, item: NavigationItem)
+    }
 }
